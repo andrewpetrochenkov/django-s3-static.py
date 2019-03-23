@@ -23,15 +23,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "https://%s/" % AWS_STATIC_DOMAIN
 ```
 
-```html
-{% load static %}
-<link rel="stylesheet" href="{% static "css/file.css" %}">
-```
-
 #### Examples
 ```bash
 $ python manage.py s3-static-create # create s3 bucket and policy
 $ python manage.py s3-static-sync   # sync static folder with s3 bucket
+```
+
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static "css/file.css" %}">
 ```
 
 <p align="center">
