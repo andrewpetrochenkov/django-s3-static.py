@@ -1,5 +1,7 @@
 <!--
 https://pypi.org/project/readme-generator/
+https://pypi.org/project/python-readme-generator/
+https://pypi.org/project/django-readme-generator/
 -->
 
 [![](https://img.shields.io/pypi/pyversions/django-s3-static.svg?longCache=True)](https://pypi.org/project/django-s3-static/)
@@ -23,6 +25,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "https://%s/" % AWS_STATIC_DOMAIN
 ```
 
+#### Commands
+command|`help`
+-|-
+`python manage.py s3-static-sync` |sync static directory with s3 bucket
+`python manage.py s3-static-create` |create s3 bucket and policy
+
 #### Examples
 ```bash
 $ python manage.py s3-static-create # create s3 bucket and policy
@@ -35,5 +43,5 @@ $ python manage.py s3-static-sync   # sync static folder with s3 bucket
 ```
 
 <p align="center">
-    <a href="https://pypi.org/project/readme-generator/">readme-generator</a>
+    <a href="https://pypi.org/project/django-readme-generator/">django-readme-generator</a>
 </p>
