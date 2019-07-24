@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-from django.core.management.base import BaseCommand
 from django.conf import settings
-import subprocess
+from django.core.management.base import BaseCommand, CommandError
 import temp
 
+from django_s3_static.utils import aws_cli
 
 POLICY = """{
     "Version": "2012-10-17",
@@ -23,25 +23,23 @@ POLICY = """{
 }
 """
 
-
 class Command(BaseCommand):
     help = 'create s3 bucket and policy'
 
     def handle(self, *args, **options):
+        if not settings.AWS_STATIC_BUCKET:
+            raise CommandError("setting.AWS_STATIC_BUCKET is empty")
         self.mb()
         self.policy()
 
     def mb(self):
-        name = settings.AWS_STATIC_BUCKET_NAME
-        uri = "s3://%s" % name
-        args = ["aws", "s3", "mb", uri]
-        subprocess.check_call(args)
+        uri = "s3://%s" % settings.AWS_STATIC_BUCKET
+        aws_cli(["s3", "mb", uri])
 
     def policy(self):
-        name = settings.AWS_STATIC_BUCKET_NAME
         path = temp.tempfile()
-        open(path, "w").write(POLICY % settings.AWS_STATIC_BUCKET_NAME)
-        args = ["aws", "s3api", "put-bucket-policy", "--bucket", name, "--policy", "file://%s" % path]
-        subprocess.check_call(args)
+        open(path, "w").write(POLICY % settings.AWS_STATIC_BUCKET)
+        args = ["s3api", "put-bucket-policy", "--bucket", settings.AWS_STATIC_BUCKET, "--policy", "file://%s" % path]
+        aws_cli(args)
 
 

@@ -18,23 +18,34 @@ $ [sudo] pip install django-s3-static
 INSTALLED_APPS = [
     "django_s3_static",
 ]
+```
 
-AWS_STATIC_BUCKET_NAME = "<name>"
-AWS_STATIC_DOMAIN = '%s.s3.amazonaws.com' % AWS_STATIC_BUCKET_NAME
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = "https://%s/" % AWS_STATIC_DOMAIN
+`settings/dev.py`
+```python
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+```
+
+`settings/prod.py`
+```python
+AWS_STATIC_ACCESS_KEY_ID = os.getenv('AWS_STATIC_ACCESS_KEY_ID')
+AWS_STATIC_SECRET_ACCESS_KEY = os.getenv('AWS_STATIC_SECRET_ACCESS_KEY')
+AWS_STATIC_BUCKET = os.getenv('AWS_STATIC_BUCKET')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = "https://%s.s3.amazonaws.com/" % AWS_STATIC_BUCKET
 ```
 
 #### Commands
 command|`help`
 -|-
-`python manage.py s3-static-sync` |sync static directory with s3 bucket
-`python manage.py s3-static-create` |create s3 bucket and policy
+`python manage.py s3_static_create` |create s3 bucket and policy
+`python manage.py s3_static_sync` |sync static directory with s3 bucket
 
 #### Examples
 ```bash
-$ python manage.py s3-static-create # create s3 bucket and policy
-$ python manage.py s3-static-sync   # sync static folder with s3 bucket
+$ python manage.py s3_static_create # create s3 bucket and policy
+$ python manage.py s3_static_sync   # sync static folder with s3 bucket
 ```
 
 ```html
