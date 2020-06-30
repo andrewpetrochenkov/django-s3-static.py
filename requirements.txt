@@ -1,0 +1,4 @@
+awscli
+Django
+django-s3-static
+temp

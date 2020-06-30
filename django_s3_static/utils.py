@@ -11,7 +11,7 @@ def aws_cli(args):
         env['LC_CTYPE'] = u'en_US.UTF'
         if not settings.AWS_STATIC_ACCESS_KEY_ID:
             raise CommandError('settings.AWS_STATIC_ACCESS_KEY_ID is empty')
-        if not settings.AWS_S3_TEMPLATES_SECRET_ACCESS_KEY:
+        if not settings.AWS_STATIC_SECRET_ACCESS_KEY:
             raise CommandError('settings.AWS_STATIC_SECRET_ACCESS_KEY is empty')
         env['AWS_ACCESS_KEY_ID'] = settings.AWS_STATIC_ACCESS_KEY_ID
         env['AWS_SECRET_ACCESS_KEY'] = settings.AWS_STATIC_SECRET_ACCESS_KEY
